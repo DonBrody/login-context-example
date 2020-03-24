@@ -1,12 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import App from './App';
+import AuthProvider from './context/AuthContext';
+import ThemeProvider from './context/ThemeContext';
 import * as serviceWorker from './serviceWorker';
+import './index.css';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <AuthProvider>
+      <ThemeProvider>
+        <App />
+      </ThemeProvider>
+    </AuthProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
