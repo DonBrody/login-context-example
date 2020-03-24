@@ -4,27 +4,31 @@ import Home from './views/Home';
 import Signin from './views/Signin';
 import Signup from './views/Signup';
 import { AuthContext } from './context/AuthContext';
-
-const sharedStyles = {
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  width: '100%',
-  padding: '0 25px',
-  height: 59,
-  color: '#444',
-  background: '#EFEFEF',
-  boxSizing: 'border-box',
-};
+import { ThemeContext } from './context/ThemeContext';
 
 function App() {
+  /**
+   * Notice that we're able to access two separate context's from
+   * this component.
+   */
   const authContext = useContext(AuthContext);
+  const themeContext = useContext(ThemeContext);
   const { currentUser } = authContext.state;
+  const { sharedStyles, headerBackground, footerBackground } = themeContext;
 
   return (
     <BrowserRouter>
-      <header style={{ ...sharedStyles, justifyContent: 'space-between', borderBottom: '1px solid #DDD' }}>
+      <header style={{
+        ...sharedStyles,
+        justifyContent: 'space-between',
+        borderBottom: '1px solid #DDD',
+        background: headerBackground,
+      }}>
         <span>I'm a header</span>
+        {/* 
+          Notice that the currentUser context state variable reacts to
+          state changes the same way that a local state variable would.
+        */}
         {!currentUser && (
           <div>
             <Link to="/signin">Sign In</Link>
@@ -48,7 +52,13 @@ function App() {
           <Route path="/" component={Home}/>
         </Switch>
       </main>
-      <footer style={{ ...sharedStyles, borderTop: '1px solid #DDD' }}>
+      <footer
+        style={{
+          ...sharedStyles,
+          borderTop: '1px solid #DDD',
+          background: footerBackground,
+        }}
+      >
         I'm a footer
       </footer>
     </BrowserRouter>
